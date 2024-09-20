@@ -1,10 +1,14 @@
 const { Router } = require('express');
-const { createUser, getUsers, updateUser } = require('./user.controllers');
+const { registerUser, getUsers, updateUser, authUser } = require('./user.controllers');
+const { checkToken, validateToken } = require('../middlewares/auth');
 
 const userRouter = Router();
 
-userRouter.get('', getUsers);
-userRouter.post('', createUser);
-userRouter.put('/:userId', updateUser);
+userRouter.get('', checkToken, getUsers);
+userRouter.put('/:userId', checkToken, updateUser);
+userRouter.get('/validate', validateToken);
+
+userRouter.post('', registerUser);
+userRouter.post('/auth', authUser);
 
 module.exports = userRouter;

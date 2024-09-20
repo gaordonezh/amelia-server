@@ -3,7 +3,10 @@ const DeviceModel = require('./device.model');
 
 module.exports.getDevices = async (req, res) => {
   try {
-    const result = await DeviceModel.find({});
+    const { user } = req.query;
+    if (!user) throw new Error('USER IS REQUIRED');
+
+    const result = await DeviceModel.find({ user });
     return res.status(200).json(result);
   } catch (error) {
     return handleError({ res, error });

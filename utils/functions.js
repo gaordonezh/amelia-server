@@ -9,7 +9,11 @@ module.exports.objectCleaner = (params = {}) => {
 };
 
 module.exports.handleError = ({ res, error, msg = undefined, logger = true }) => {
-  if (logger) console.log('error:', error);
-
-  return res.status(500).json({ msg: msg ?? error?.message, description: error?.message });
+  const message = error?.message;
+  if (logger) {
+    console.log('==================================================');
+    console.log(message);
+    console.log('==================================================');
+  }
+  return res.status(500).json({ msg: msg || message, description: message });
 };
